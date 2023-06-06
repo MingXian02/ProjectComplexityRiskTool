@@ -1,0 +1,45 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+input[type="radio"] {
+    vertical-align: middle;
+}
+
+button[type="submit"] {
+    margin-top: 16px;
+}
+
+.tab-navigation {
+    margin-bottom: 16px;
+}
+
+.tab-navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tab-navigation ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.tab-content div {
+    display: none;
+}
+
+.tab-content div:target {
+    display: block;
+}
