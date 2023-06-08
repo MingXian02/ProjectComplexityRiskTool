@@ -21,7 +21,7 @@
     if (isset($_POST['name']) && isset($_POST['password']) && isset($_POST['username']) && isset($_POST['position']) && isset($_POST['confirm'])) {
         if ($_POST['password'] == $_POST['confirm']) {
             $password = hash('md5', $salt . $_POST['password']);
-            $stmt = $pdo->prepare("insert into login (name, position, username, password) values (:name, :position, :username, :password)");
+            $stmt = $pdo->prepare("insert into project (name, position, username, password) values (:name, :position, :username, :password)");
             $stmt->execute(
                 array(
                     ':name' => $_POST['name'],
@@ -53,7 +53,7 @@
         <input type="reset" name="cancel" value="Cancel">
     </form>
     <p><a href="Login.php">Please login</a></p>
-    <p><a href="index.php">Back to home page</a></p>
+    <p><a href="Home.php">Back to home page</a></p>
 
 
 

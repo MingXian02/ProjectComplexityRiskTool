@@ -10,6 +10,26 @@
 
 <body>
     <h1>Project List</h1>
+    <?php
+    require "PDO.php";
+
+    if (!isset($_GET['username'])) {
+        echo "<h1>You have not logged in</h1><br/>";
+        echo "<a href='login.php'>Please Login</a><br/><br/>";
+        die("Name parameter missing");
+    }
+
+    $list = $pdo->prepare("SELECT * FROM project WHERE username = :username");
+    $list->bindValue(':username', $_GET['username']);
+    $list->execute();
+    $lists = $list->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($lists as $list) {
+        echo "<h1>" . $list['name'] . "</h1>";
+    }
+    $url = $_GET['username'];
+    ?>
+
+    <a href="RegisterProject.php?username=<?php echo $url?>">Register Project</a>
 </body>
 
 </html>

@@ -12,6 +12,11 @@
 
     <?php
     include 'PDO.php';
+    if (!isset($_GET['username'])) {
+        echo "<h1>You have not logged in</h1><br/>";
+        echo "<a href='login.php'>Please Login</a><br/><br/>";
+        die("Name parameter missing");
+    }
     ?>
     <h1>Project Registration</h1>
 
@@ -20,12 +25,12 @@
         <?php
         $stmt = $pdo->query("select count(*) as total from project;");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach($rows as $row){
-        echo ($row['total']);
+        foreach ($rows as $row) {
+            echo ($row['total'] + 1);
 
         }
         ?>
-        <br/>
+        <br />
         <label for="name">Project Name: </label>
         <input type="text" name="name"><br />
         <label for="owner">Owner: </label>
@@ -38,15 +43,15 @@
         <input type="radio" name="mode" value="insource">Insource
         <input type="radio" name="mode" value="outsource">Outsource
         <input type="radio" name="mode" value="cosource">Co-source
-        <input type="radio" name="mode" value="unspecified">Unspecified<br/>
+        <input type="radio" name="mode" value="unspecified">Unspecified<br />
         <input type="submit" value="Register">
     </form>
 
     <?php
     $success = false;
 
-    if (isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['funds']) && isset($_POST['duration']) && isset($_POST['mode'])) {
-        $stmt = $pdo->prepare("insert into project (name, owner, funds, duration, mode) values (:name, :owner, :funds, :duration, :mode)");
+    if (isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['funds']) && isset($_POST['duration']) && isset($_POST['mode']) && isset($_GET['username'])) {
+        $stmt = $pdo->prepare("insert into project (name, owner, funds, duration, mode, username) values (:name, :owner, :funds, :duration, :mode, :username)");
         $stmt->execute(
             array(
                 ':name' => $_POST['name'],
@@ -54,6 +59,7 @@
                 ':funds' => $_POST['funds'],
                 ':duration' => $_POST['duration'],
                 ':mode' => $_POST['mode'],
+                ':username' => $_GET['username']
             )
         );
         $success = "Register successful";
@@ -61,7 +67,11 @@
 
     if ($success !== false)
         echo ('<p style="color: green;">' . htmlentities($success) . "</p>\n");
-    ?> 
+
+    $url = $_GET['username'];
+    ?>
+
+    <a href="ProjectList.php?username=<?php echo $url ?>">Project List</a>
 
 </body>
 

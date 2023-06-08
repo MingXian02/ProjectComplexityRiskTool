@@ -26,29 +26,25 @@ foreach ($sections as $section) {
         $optionsQuery->execute();
         $options = $optionsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-        $questionname = "question" . $questionid;
-
         foreach ($options as $option) {
-            echo '<label><input type="radio" name="' . $questionname . '"value="' . $option['option_score'] . '">' . $option['option_text'] . '</label><br>';
+            echo '<label><input type="radio" name="' . $option['question_id'] . '"value="' . $option['option_score'] . '">' . $option['option_text'] . '</label><br>';
         }
 
         echo '</td>';
         echo '</tr>';
 
-        if (isset($_POST[$questionname])) {
+        if (isset($_POST[$option['question_id']])) {
             $stmt = $pdo->prepare("INSERT INTO score (score, questionid, sectionid) VALUES (:score, :questionid, :sectionid)");
             $stmt->execute(
                 array(
-                    ":score" => $_POST[$questionname],
+                    ":score" => $_POST[$option['question_id']],
                     ":questionid" => $questionid,
                     ":sectionid" => $sectionid,
                 )
             );
         }
         $questionid++;
-
     }
-
     echo '</table>';
     echo '</div>';
     $sectionid++;

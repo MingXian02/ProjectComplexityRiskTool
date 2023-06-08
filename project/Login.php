@@ -20,7 +20,7 @@
 
     if (isset($_POST['name']) && isset($_POST['password']) && isset($_POST['username']) && isset($_POST['position'])) {
         $check = hash('md5', $salt . $_POST['password']);
-        $stmt = $pdo->prepare("select * from login where username = :username;");
+        $stmt = $pdo->prepare("select * from user where username = :username;");
         $stmt->execute(
             array(
                 ':username' => $_POST['username'],
@@ -34,7 +34,7 @@
             $password = $row['password'];
         }
         if ($name == $_POST['name'] && $position == $_POST['position'] && $username == $_POST['username'] && $check == $password) {
-            header("Location: ProjectList.php");
+            header("Location: ProjectList.php?username=" . urlencode($_POST['username']));
             return;
         } else {
             echo "Failed";
@@ -55,7 +55,7 @@
         <input type="reset" name="cancel" value="Cancel">
     </form>
 
-    <p><a href="index.php">Back to home page</a></p>
+    <p><a href="Home.php">Back to home page</a></p>
 
     <p>For a password hint, view source and find a password hint in the HTML comments</p>
 
