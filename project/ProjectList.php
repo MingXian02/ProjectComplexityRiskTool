@@ -23,13 +23,32 @@
     $list->bindValue(':username', $_GET['username']);
     $list->execute();
     $lists = $list->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($lists as $list) {
-        echo "<h1>" . $list['name'] . "</h1>";
-    }
     $url = $_GET['username'];
-    ?>
 
-    <a href="RegisterProject.php?username=<?php echo $url?>">Register Project</a>
+
+
+    foreach ($lists as $list) {
+        echo "<table>";
+        $projectScore = $pdo->prepare("SELECT * FROM projectscore WHERE name = :name");
+        $projectScore->bindValue(':name', $list['name']);
+        $projectScore->execute();
+        $totalScore = $projectScore->fetchAll(PDO::FETCH_ASSOC);
+        $name = $list['name'];
+        echo "<h3>" . $name . "</h3>";
+        foreach ($totalScore as $total) {
+            echo "<tr>";
+
+            echo "<td>" . $total['total'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        echo '<a href="Assessment.php?project=' . $name . '/' . $url . '">Do assessment</a>';
+
+    }
+
+    ?>
+    <br>
+    <a href="RegisterProject.php?username=<?php echo $url ?>">Register Project</a>
 </body>
 
 </html>

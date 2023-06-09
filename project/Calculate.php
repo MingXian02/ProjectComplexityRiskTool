@@ -28,4 +28,6 @@ for ($section = 0; $section < 7; $section++) {
 
 echo '<h2>Overall Score</h2>';
 echo '<p>Score: ' . $totalScore . '</p>';
+
+require "InsertScore.php";
 ?>

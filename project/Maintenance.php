@@ -7,12 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THEN NAN HUI 213054</title>
 </head>
-
 <body>
-    <h1>Welcome to Project Complexity and Risk Assesment Tool</h1>
-    <a href="Login.php">Please Log In</a><br/>
-    <a href="RegisterAccount.php">Please Register</a><br/>
-    </p>
+    
 </body>
-
 </html>
