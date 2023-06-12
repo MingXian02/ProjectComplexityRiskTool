@@ -1,5 +1,6 @@
 <?php
 $sectionid = 1;
+$questionid = 1;
 $sectionsQuery = $pdo->query("SELECT * FROM sections");
 $sections = $sectionsQuery->fetchAll(PDO::FETCH_ASSOC);
 
@@ -11,7 +12,7 @@ foreach ($sections as $section) {
     $questionsQuery->bindValue(':section_id', $sectionid);
     $questionsQuery->execute();
     $questions = $questionsQuery->fetchAll(PDO::FETCH_ASSOC);
-    $questionid = 1;
+    
     echo "<div>";
     echo "<table>";
     foreach ($questions as $question) {
