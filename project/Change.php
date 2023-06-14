@@ -3,6 +3,8 @@
 
 <head>
     <title>Assessment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/change.css">
 </head>
 
 <body>
@@ -77,6 +79,7 @@
     }
 
     ?>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 <a href="Maintenance.php">Back to Maintenance page</a>
 
