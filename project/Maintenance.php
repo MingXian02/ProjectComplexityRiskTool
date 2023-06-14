@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THEN NAN HUI 213054</title>
+    <title>Maintenance Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/maintenance.css">
 </head>
 <body>
 <?php
@@ -45,7 +47,7 @@ foreach ($sections as $section) {
 
         echo '</td>';
         echo '<td>';
-        echo '<a href="Change.php?id=' . $sectionid . '/' . $questionid . '">Change</a>';
+        echo '<button class="change-button" onclick="location.href=\'Change.php?id=' . $sectionid . '/' . $questionid . '\';">Change</button>';
         echo '</td></tr>';
 
         
@@ -57,5 +59,6 @@ foreach ($sections as $section) {
     $sectionid++;
 }
 ?>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
