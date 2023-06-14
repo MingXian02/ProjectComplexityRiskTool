@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/Login.css">   
     <title>THEN NAN HUI 213054</title>
 </head>
 
@@ -56,8 +58,6 @@
     </form>
 
     <p><a href="Home.php">Back to home page</a></p>
-
-    <p>For a password hint, view source and find a password hint in the HTML comments</p>
 
 </body>
 
