@@ -39,6 +39,21 @@
             echo "<tr>";
 
             echo "<td>" . $total['total'] . "</td>";
+            $levelQuery = $pdo->query("SELECT * FROM level");
+            $levels = $levelQuery->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($total['total'] < 45) {
+                $level = $levels[0];
+            } elseif ($total['total'] >= 45 && $total['total'] <= 63) {
+                $level = $levels[1];
+            } elseif ($total['total'] >= 64 && $total['total'] <= 82) {
+                $level = $levels[2];
+            } else {
+                $level = $levels[3];
+            }
+
+            echo "<td>" . $level['complexity'] . '</td>';
+            echo "<td>" . $level['definition'] . '</td>';
             echo "</tr>";
         }
         echo "</table>";

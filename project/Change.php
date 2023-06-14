@@ -30,7 +30,7 @@
         echo '<td>' . $question['question_id'] . '. ' . nl2br($question['question_text']) . '</td>';
         echo '<form method="POST">';
         echo '<td><label>Change question:</label>';
-        echo '<input type="text" name="' . $question['question_id'] . '">';
+        echo '<input type="text" name="question_' . $question['question_id'] . '">';
         echo '<input type="submit" value="Change Question"></form><br/>';
         echo '<tr>';
         echo '<td>';
@@ -45,18 +45,19 @@
             echo $option['option_text'] . '<br/>';
             echo '<form method="POST">';
             echo '<label>Change option: </label>';
-            echo '<input type="text" name="' . $option['option_id'] . '">';
+            echo '<input type="text" name="option_' . $option['option_id'] . '">';
             echo '<input type="submit" value="Change Option"></form><br/>';
-            if (isset($_POST[$option['option_id']])) {
+            if (isset($_POST['option_' . $option['option_id']])) {
                 $update = $pdo->prepare("update options set option_text = :option where question_id = :qi and option_id = :oi");
                 $update->execute(
                     array(
-                        ":option" => $_POST[$option['option_id']],
+                        ":option" => $_POST['option_' . $option['option_id']],
                         ":qi" => $questionid,
                         ":oi" => $option['option_id'],
                     )
                 );
             }
+
         }
 
         echo '</td>';
@@ -65,11 +66,11 @@
     echo '</table>';
     echo '</div>';
 
-    if (isset($_POST[$questionid])) {
+    if (isset($_POST['question_' . $questionid])) {
         $update = $pdo->prepare("update questions set question_text = :question where question_id = :qi");
         $update->execute(
             array(
-                ":question" => $_POST[$questionid],
+                ":question" => $_POST['question_' . $questionid],
                 ":qi" => $questionid,
             )
         );
@@ -77,5 +78,6 @@
 
     ?>
 </body>
+<a href="Maintenance.php">Back to Maintenance page</a>
 
 </html>

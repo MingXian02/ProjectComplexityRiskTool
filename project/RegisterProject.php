@@ -23,9 +23,12 @@
     <form method="POST">
         <label for="projectID">Project ID: </label>
         <?php
-        $stmt = $pdo->query("select count(*) as total from project;");
+        $stmt = $pdo->prepare("select count(*) as total from project where username = :username;");
+        $stmt->bindValue(':username', $_GET['username']);
+        $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row) {
+            
             echo ($row['total'] + 1);
 
         }

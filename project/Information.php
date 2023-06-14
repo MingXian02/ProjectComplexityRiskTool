@@ -36,7 +36,7 @@
         </tr>
         <?php foreach ($section as $section) : ?>
             <tr>
-                <td><?php echo $section['section_name'] . "(" . $section['number_of_question'] . " Questions) "; ?></td>
+                <td><?php echo $section['section_name'] . "(" . $section['num_Question'] . " Questions) "; ?></td>
                 <td><?php echo $section['description'] ?></td>
             </tr>
         <?php endforeach; ?>
@@ -56,7 +56,7 @@
         <?php foreach ($section as $section) : ?>
             <tr>
                 <td><?php echo $section['section_name'] ?></td>
-                <td><?php echo $section['number_of_question'] ?></td>
+                <td><?php echo $section['num_Question'] ?></td>
                 <td><?php echo $section['maximum_score'] ?></td>
             </tr>
         <?php endforeach; ?>
@@ -70,12 +70,12 @@
             <th>Defintion</th>
             <th>Score_range</th>
         </tr>
-        <?php $complexityQuery = $pdo->prepare("SELECT * FROM complexity_risk_levels");
+        <?php $complexityQuery = $pdo->prepare("SELECT * FROM level");
         $complexityQuery->execute();
         $result = $complexityQuery->fetchAll(PDO::FETCH_ASSOC); ?>
         <?php foreach ($result as $result) : ?>
             <tr>
-                <td><?php echo $result['level_id']; ?></td>
+                <td><?php echo $result['id']; ?></td>
                 <td><?php echo $result['complexity']; ?></td>
                 <td><?php echo $result['definition']; ?></td>
                 <td><?php echo $result['score_range']; ?></td>
@@ -103,7 +103,7 @@
 
     <?php foreach ($sections as $section) : ?>
         <?php
-        $knowledgeareaQuery = $pdo->query("SELECT KA_text FROM knowledgearea JOIN sections ON knowledgearea.section_id = sections.section_id WHERE sections.section_id = " . $section['section_id']);
+        $knowledgeareaQuery = $pdo->query("SELECT text FROM knowledgearea JOIN sections ON knowledgearea.sectionid = sections.section_id WHERE sections.section_id = " . $section['section_id']);
         $KA = $knowledgeareaQuery->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
@@ -117,31 +117,31 @@
             </tr>
             <?php foreach ($KA as $row) : ?>
                 <?php
-                $questionsQuery = $pdo->query("SELECT questions.question_id, questions.question_text FROM questions JOIN knowledgearea ON questions.KA = knowledgearea.KA WHERE knowledgearea.KA_text = '" . $row['KA_text'] . "'");
+                $questionsQuery = $pdo->query("SELECT questions.question_id, questions.question_text FROM questions JOIN knowledgearea ON questions.ka_id = knowledgearea.id WHERE knowledgearea.text = '" . $row['text'] . "'");
                 $questions = $questionsQuery->fetchAll(PDO::FETCH_ASSOC);
                 ?>
                 <?php foreach ($questions as $index => $question) : ?>
                     <tr>
                         <?php if ($index === 0) : ?>
-                            <td rowspan="<?php echo count($questions); ?>"><?php echo $row['KA_text']; ?></td>
+                            <td rowspan="<?php echo count($questions); ?>"><?php echo $row['text']; ?></td>
                         <?php endif; ?>
                         <td><?php echo $question['question_text']; ?></td>
                         <?php
-                        $clarificationsQuery = $pdo->query("SELECT clarification_text FROM clarifications WHERE question_id = " . $question['question_id']);
+                        $clarificationsQuery = $pdo->query("SELECT text FROM clarification WHERE questionid = " . $question['question_id']);
                         $clarifications = $clarificationsQuery->fetchAll(PDO::FETCH_ASSOC);
                         ?>
                         <td>
                             <?php foreach ($clarifications as $clarification) : ?>
-                                <li><?php echo $clarification['clarification_text']; ?><br></li>
+                                <li><?php echo $clarification['text']; ?><br></li>
                             <?php endforeach; ?>
                         </td>
                         <?php
-                        $optionsQuery = $pdo->query("SELECT option_value, option_text FROM options WHERE question_id = " . $question['question_id']);
+                        $optionsQuery = $pdo->query("SELECT option_score, option_text FROM options WHERE question_id = " . $question['question_id']);
                         $options = $optionsQuery->fetchAll(PDO::FETCH_ASSOC);
                         ?>
                         <td>
                             <?php foreach ($options as $option) : ?>
-                                <?php echo $option['option_value'] . "=" . $option['option_text']; ?><br>
+                                <?php echo $option['option_score'] . "=" . $option['option_text']; ?><br>
                             <?php endforeach; ?>
                         </td>
                     </tr>

@@ -25,6 +25,8 @@
             )
         );
     }
+    $delete = $pdo->prepare("delete from score");
+    $delete->execute();
     ?>
 </body>
 
