@@ -7,8 +7,8 @@ require_once "PDO.php";
 
 <head>
     <title>Assessment</title>
-    <!-- CSS styling -->
-    <link rel="stylesheet" href="Assessment.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/assessment.css">
 </head>
 
 <body>
