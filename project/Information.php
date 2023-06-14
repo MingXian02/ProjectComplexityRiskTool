@@ -3,8 +3,13 @@
 
 <head>
     <title>Information Page</title>
-    <!-- CSS styling -->
     <style>
+         body {
+            background-image: url("style/images/Information.avif");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    
         table {
             border-collapse: collapse;
             width: 100%;
