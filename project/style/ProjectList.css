@@ -5,11 +5,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color: #333;
+    color: #fff; 
 }
 
 h1 {
-    color: #130202;
+    color: #100f0f; 
     text-align: center;
     margin-top: 20px;
 }
@@ -22,18 +22,24 @@ th, td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    color: #fff; 
 }
 
 th {
     background-color: #f2f2f2;
+    color: #333; 
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
 }
 
 a.btn {
-    display: inline-block;
-    margin-top: 16px;
-    width: 100%;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -44,11 +50,11 @@ a.btn {
 }
 
 a.btn:hover {
-    background-color: #45a049;
+    background-color: hsl(124, 41%, 7%);
 }
 
 a.btn-secondary {
-    background-color: #888;
+    background-color: #000;
 }
 
 a.btn-secondary:hover {
