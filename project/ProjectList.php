@@ -12,7 +12,9 @@
 
 <body>
     <h1>Project List</h1>
-    <a href="Information.php">Information page</a>
+    <div class="centered">
+        <a href="Information.php" class="btn">Information page</a>
+    </div>
     <?php
     require "PDO.php";
 
@@ -60,13 +62,17 @@
             echo "</tr>";
         }
         echo "</table>";
-        echo '<a href="Assessment.php?project=' . $name . '/' . $url . '">Do assessment</a>';
+        echo '<div class="centered">';
+        echo '<a href="Assessment.php?project=' . $name . '/' . $url . '" class="btn btn-dark">Do assessment</a>';
+        echo '</div>';
 
     }
 
     ?>
     <br>
-    <a href="RegisterProject.php?username=<?php echo $url ?>">Register Project</a>
+    <div class="centered">
+        <a href="RegisterProject.php?username=<?php echo $url ?>" class="btn">Register Project</a>
+    </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
