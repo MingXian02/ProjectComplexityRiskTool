@@ -3,7 +3,7 @@
 
 <head>
     <title>Information Page</title>
-    <link rel="stylesheet" href="Information.css">
+    <link rel="stylesheet" href="style/Information.css">
 </head>
 
 <body>
