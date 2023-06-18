@@ -45,10 +45,16 @@
         <label for="duration">Project Duration: </label>
         <input type="text" name="duration"><br />
         <label for="mode">Mode: </label><br />
-        <input type="radio" name="mode" value="insource">Insource
-        <input type="radio" name="mode" value="outsource">Outsource
-        <input type="radio" name="mode" value="cosource">Co-source
-        <input type="radio" name="mode" value="unspecified">Unspecified<br />
+        <div class="radio-container">
+            <input type="radio" name="mode" id="insource" value="insource" checked>
+            <label for="insource">Insource</label>
+            <input type="radio" name="mode" id="outsource" value="outsource">
+            <label for="outsource">Outsource</label>
+            <input type="radio" name="mode" id="cosource" value="cosource">
+            <label for="cosource">Co-source</label>
+            <input type="radio" name="mode" id="unspecified" value="unspecified">
+            <label for="unspecified">Unspecified</label>
+        </div>
         <input type="submit" value="Register">
     </form>
 
@@ -76,7 +82,8 @@
     $url = $_GET['username'];
     ?>
 
-    <a href="ProjectList.php?username=<?php echo $url ?>">Project List</a>
+    <a class="btn-project-list" href="ProjectList.php?username=<?php echo $url ?>">Project List</a>
+
 
 </body>
 
