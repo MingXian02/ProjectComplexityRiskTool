@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/RegisterAccount.css">   
-    <title>THEN NAN HUI 213054</title>
+    <title>Register your account</title>
 </head>
 
 <body>
@@ -54,8 +54,8 @@
         <input type="submit" value="Register">
         <input type="reset" name="cancel" value="Cancel">
     </form>
-    <p><a href="Login.php">Please login</a></p>
-    <p><a href="Home.php">Back to home page</a></p>
+    <p class="login-link"><a href="Login.php">Please login</a></p>
+    <p class="home-link"><a href="Home.php">Back to home page</a></p>
 
 
 
