@@ -11,6 +11,18 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning justify-content-between"
+        style="margin-bottom: 15px; padding: 0">
+        <a class="navbar-brand" style="padding: 10px">
+            <div style="font-size: 30px">Project Complexity and Risk</div>
+        </a>
+        <ul class="navbar-nav">
+            <li class="navbar-link">
+                <button class="btn btn-outline-danger btn-lg" style="margin-right: 10px"
+                    onclick="location.href = 'Home.php?>';">Logout</button>
+            </li>
+        </ul>
+    </nav>
     <?php
     require "PDO.php";
     $sectionid = 1;

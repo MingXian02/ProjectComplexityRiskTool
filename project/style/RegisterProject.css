@@ -10,11 +10,6 @@ body {
   color: white;
 }
 
-h1 {
-  color: white;
-  text-align: center;
-}
-
 form {
   max-width: 400px;
   margin: 20px auto;

@@ -5,16 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/ProjectList.css">
     <title>THEN NAN HUI 213054</title>
 </head>
 
 <body>
-    <h1>Project List</h1>
-    <div class="centered">
-        <a href="Information.php" class="btn">Information page</a>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning justify-content-between"
+        style="margin-bottom: 15px; padding: 0">
+        <a class="navbar-brand" style="padding: 10px">
+            <div style="font-size: 30px">Project List</div>
+        </a>
+        <ul class="navbar-nav">
+            <li class="navbar-link">
+                <button class="btn btn-outline-danger btn-lg" style="margin-right: 10px"
+                    onclick="location.href = 'RegisterProject.php?username=<?php echo $_GET['username'] ?>';">Register
+                    New Project</button>
+            </li>
+            <li class="navbar-link">
+                <button class="btn btn-outline-danger btn-lg" style="margin-right: 10px"
+                    onclick="location.href = 'Information.php?username=<?php echo $_GET['username'] ?>';">Information
+                    Page</button>
+            </li>
+            <li class="navbar-link">
+                <button class="btn btn-outline-danger btn-lg" style="margin-right: 10px"
+                    onclick="location.href = 'Home.php';">Logout</button>
+            </li>
+        </ul>
+    </nav>
+
     <?php
     require "PDO.php";
 
@@ -24,26 +43,58 @@
         die("Name parameter missing");
     }
 
+    echo "<h1>Welcome " . $_GET['username'] . "</h1>";
+
     $list = $pdo->prepare("SELECT * FROM project WHERE username = :username");
     $list->bindValue(':username', $_GET['username']);
     $list->execute();
     $lists = $list->fetchAll(PDO::FETCH_ASSOC);
     $url = $_GET['username'];
 
+    if (empty($lists)) {
+        echo "<div>";
+        echo "<h3>No project</h3>";
+        echo "</div>";
+    }
 
 
     foreach ($lists as $list) {
-        echo "<table>";
+
         $projectScore = $pdo->prepare("SELECT * FROM projectscore WHERE name = :name");
         $projectScore->bindValue(':name', $list['name']);
         $projectScore->execute();
         $totalScore = $projectScore->fetchAll(PDO::FETCH_ASSOC);
         $name = $list['name'];
-        echo "<h3>" . $name . "</h3>";
+        echo "<ul>";
+        echo '<li><div style="display: flex;"><h3 style="margin-right: 30px">' . $name . '</h3><a href="Assessment.php?project=' . $name . '/' . $url . '" class="btn btn-light">Do assessment</a></div></li></ul>';
         foreach ($totalScore as $total) {
-            echo "<tr>";
-
-            echo "<td>" . $total['total'] . "</td>";
+            echo '<table style="background-color: green; width: 100%;">';
+            echo '<tr>';
+            echo '<td>Section 1</td>';
+            echo '<td>' . $total['section1'] . '</td>';
+            echo '</tr>';
+            echo '<td>Section 2</td>';
+            echo '<td>' . $total['section2'] . '</td>';
+            echo '</tr>';
+            echo '<td>Section 3</td>';
+            echo '<td>' . $total['section3'] . '</td>';
+            echo '</tr>';
+            echo '<td>Section 4</td>';
+            echo '<td>' . $total['section4'] . '</td>';
+            echo '</tr>';
+            echo '<td>Section 5</td>';
+            echo '<td>' . $total['section5'] . '</td>';
+            echo '</tr>';
+            echo '<td>Section 6</td>';
+            echo '<td>' . $total['section6'] . '</td>';
+            echo '</tr>';
+            echo '<td>Section 7</td>';
+            echo '<td>' . $total['section7'] . '</td>';
+            echo "</tr>";
+            echo '</tr>';
+            echo '<td>Total Score</td>';
+            echo '<td>' . $total['total'] . '</td>';
+            echo "</tr>";
             $levelQuery = $pdo->query("SELECT * FROM level");
             $levels = $levelQuery->fetchAll(PDO::FETCH_ASSOC);
 
@@ -57,22 +108,20 @@
                 $level = $levels[3];
             }
 
-            echo "<td>" . $level['complexity'] . '</td>';
-            echo "<td>" . $level['definition'] . '</td>';
-            echo "</tr>";
+            echo '</tr>';
+            echo '<td>Complexity and Risk Level</td>';
+            echo '<td>' . $level['complexity'] . '</td>';
+            echo '</tr>';
+            echo '</tr>';
+            echo '<td>Definition</td>';
+            echo '<td>' . $level['definition'] . '</td>';
+            echo '</tr>';
+            echo "</table>";
         }
-        echo "</table>";
-        echo '<div class="centered">';
-        echo '<a href="Assessment.php?project=' . $name . '/' . $url . '" class="btn btn-dark">Do assessment</a>';
-        echo '</div>';
-
     }
 
     ?>
-    <br>
-    <div class="centered">
-        <a href="RegisterProject.php?username=<?php echo $url ?>" class="btn">Register Project</a>
-    </div>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>

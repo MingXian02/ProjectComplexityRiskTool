@@ -1,4 +1,5 @@
 <?php
+require "Session.php";
 $sectionid = 1;
 $questionid = 1;
 $sectionsQuery = $pdo->query("SELECT * FROM sections");
@@ -12,7 +13,7 @@ foreach ($sections as $section) {
     $questionsQuery->bindValue(':section_id', $sectionid);
     $questionsQuery->execute();
     $questions = $questionsQuery->fetchAll(PDO::FETCH_ASSOC);
-    
+
     echo "<div>";
     echo "<table>";
     foreach ($questions as $question) {
@@ -26,28 +27,36 @@ foreach ($sections as $section) {
         $optionsQuery->bindValue(':question_id', $question['question_id']);
         $optionsQuery->execute();
         $options = $optionsQuery->fetchAll(PDO::FETCH_ASSOC);
-
         foreach ($options as $option) {
-            echo '<label><input type="radio" name="' . $option['question_id'] . '"value="' . $option['option_score'] . '">' . $option['option_text'] . '</label><br>';
+            if (isset($_SESSION['option'][$questionid - 1])) {
+                if ($option['option_score'] == $_SESSION['option'][$questionid - 1]) {
+                    echo '<label><input type="radio" name="' . $option['question_id'] . '" value="' . $option['option_score'] . '" checked>' . $option['option_text'] . '</label><br>';
+                } else
+                    echo '<label><input type="radio" name="' . $option['question_id'] . '" value="' . $option['option_score'] . '">' . $option['option_text'] . '</label><br>';
+            } else {
+                echo '<label><input type="radio" name="' . $option['question_id'] . '"value="' . $option['option_score'] . '">' . $option['option_text'] . '</label><br>';
+            }
         }
 
         echo '</td>';
         echo '</tr>';
-
-        if (isset($_POST[$option['question_id']])) {
-            $stmt = $pdo->prepare("INSERT INTO score (score, questionid, sectionid) VALUES (:score, :questionid, :sectionid)");
-            $stmt->execute(
-                array(
-                    ":score" => $_POST[$option['question_id']],
-                    ":questionid" => $questionid,
-                    ":sectionid" => $sectionid,
-                )
-            );
-        }
         $questionid++;
     }
     echo '</table>';
-    echo '</div>';
+    echo '</div><br>';
+
     $sectionid++;
 }
+if (isset($_SESSION['option']) && sizeof($_SESSION['option']) > 0) {
+    if(sizeof($_SESSION['option']) < 64){
+        echo '<script type ="text/JavaScript">';
+        echo 'alert("Please answer all the questions!!")';
+        echo '</script>';
+        $delete = $pdo->prepare("delete from score");
+        $delete->execute();
+    }
+    unset($_SESSION['option']);
+
+}
+
 ?>

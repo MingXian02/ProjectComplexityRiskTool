@@ -55,6 +55,10 @@ input[type="password"] {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+.position{
+  width: 25%;
+}
+
 input[type="submit"],
 input[type="reset"] {
   display: inline-block;
@@ -73,29 +77,3 @@ input[type="reset"]:hover {
   background-color: hsla(12, 71%, 3%, 0.089);
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* Success message styles */
-.success {
-  color: #e7eee7;
-  margin-top: 10px;
-}
-
-/* Additional Styles */
-p.login-link a {
-  color: white;
-}
-
-p.login-link a:hover {
-  text-decoration: underline;
-}
-
-p.home-link a {
-  color: black;
-}
-
-p.home-link a:hover {
-  text-decoration: underline;
-}

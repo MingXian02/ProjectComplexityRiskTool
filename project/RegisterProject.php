@@ -6,11 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/RegisterProject.css">
     <title>Register your project</title>
+    <link rel="stylesheet" href="style/RegisterProject.css" type="text/css">
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning justify-content-between"
+        style="margin-bottom: 15px; padding: 0">
+        <a class="navbar-brand" style="padding: 10px">
+            <div style="font-size: 30px">Project Registration</div>
+        </a>
+        <ul class="navbar-nav">
+            <li class="navbar-link">
+                <button class="btn btn-outline-danger btn-lg" style="margin-right: 10px"
+                    onclick="location.href = 'ProjectList.php?username=<?php echo $_GET['username'] ?>';">Project
+                    List</button>
+            </li>
+        </ul>
+    </nav>
 
     <?php
     include 'PDO.php';
@@ -20,22 +33,23 @@
         die("Name parameter missing");
     }
     ?>
-    <h1>Project Registration</h1>
 
     <form method="POST">
-        <label for="projectID">Project ID: </label>
-        <?php
-        $stmt = $pdo->prepare("select count(*) as total from project where username = :username;");
-        $stmt->bindValue(':username', $_GET['username']);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($rows as $row) {
-            
-            echo ($row['total'] + 1);
+        <div class="projectId">
+            <p>Project ID:
+                <?php
+                $stmt = $pdo->prepare("select count(*) as total from project where username = :username;");
+                $stmt->bindValue(':username', $_GET['username']);
+                $stmt->execute();
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($rows as $row) {
 
-        }
-        ?>
-        <br />
+                    echo ($row['total'] + 1);
+
+                }
+                ?>
+            </p>
+        </div>
         <label for="name">Project Name: </label>
         <input type="text" name="name"><br />
         <label for="owner">Owner: </label>
@@ -62,28 +76,41 @@
     $success = false;
 
     if (isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['funds']) && isset($_POST['duration']) && isset($_POST['mode']) && isset($_GET['username'])) {
-        $stmt = $pdo->prepare("insert into project (name, owner, funds, duration, mode, username) values (:name, :owner, :funds, :duration, :mode, :username)");
-        $stmt->execute(
+        $check = $pdo->prepare("select count(*) from project where name = :name");
+        $check->execute(
             array(
-                ':name' => $_POST['name'],
-                ':owner' => $_POST['owner'],
-                ':funds' => $_POST['funds'],
-                ':duration' => $_POST['duration'],
-                ':mode' => $_POST['mode'],
-                ':username' => $_GET['username']
+                'name' => $_POST['name'],
             )
         );
-        $success = "Register successful";
+        $isRegistered = $check->fetchColumn();
+        if ($isRegistered != 1) {
+            $stmt = $pdo->prepare("insert into project (name, owner, funds, duration, mode, username) values (:name, :owner, :funds, :duration, :mode, :username)");
+            $stmt->execute(
+                array(
+                    ':name' => $_POST['name'],
+                    ':owner' => $_POST['owner'],
+                    ':funds' => $_POST['funds'],
+                    ':duration' => $_POST['duration'],
+                    ':mode' => $_POST['mode'],
+                    ':username' => $_GET['username']
+                )
+            );
+            $success = "Register successful";
+        } else {
+            echo '<script type ="text/JavaScript">';
+            echo 'alert("The project is registered!!")';
+            echo '</script>';
+        }
     }
 
-    if ($success !== false)
-        echo ('<p style="color: green;">' . htmlentities($success) . "</p>\n");
+    if ($success !== false) {
+        echo "<div style='border-radius: 10px; background-color: white; margin: auto; padding: 5px; width: 350px; text-align: center; vertical-align: center'>";
+        echo ('<p style="color: rgb(0, 255, 0); font-size: 20px; margin: 0">' . htmlentities($success) . "</p>\n");
+        echo "</div>";
+    }
 
     $url = $_GET['username'];
     ?>
-
-    <a class="btn-project-list" href="ProjectList.php?username=<?php echo $url ?>">Project List</a>
-
 
 </body>
 

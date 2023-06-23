@@ -9,6 +9,7 @@
     <?php
     require "PDO.php";
     if ($sectionScores[0] != null) {
+        
         $stmt = $pdo->prepare("INSERT INTO projectscore VALUES (:name, :username, :total, :s1, :s2, :s3, :s4, :s5, :s6, :s7)");
         $stmt->execute(
             array(
@@ -27,6 +28,7 @@
     }
     $delete = $pdo->prepare("delete from score");
     $delete->execute();
+    // session_destroy();
     ?>
 </body>
 
